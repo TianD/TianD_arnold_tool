@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>462</width>
+    <height>466</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ARNOLD渲染分层工具</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="project_btn">
+      <property name="text">
+       <string>设置工程目录</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="setRender_btn">
+      <property name="text">
+       <string>渲染设置</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="replace_btn">
+      <property name="text">
+       <string>替换参考文件</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="import_btn">
+      <property name="text">
+       <string>导入参考文件</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="layer_box">
+      <property name="title">
+       <string>分层</string>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="chr_color_btn">
+         <property name="text">
+          <string>chr_color</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="bg_color_btn">
+         <property name="text">
+          <string>bg_color</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="shadow_btn">
+         <property name="text">
+          <string>shadow</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="rgblight_btn">
+         <property name="text">
+          <string>RGBlight</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="foglight_btn">
+         <property name="text">
+          <string>FOGlight</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QGroupBox" name="options_box">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QCheckBox" name="primaryVisibility_check">
+            <property name="text">
+             <string>primaryVisibility</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="aiOpaque_check">
+            <property name="text">
+             <string>aiOpaque</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="castsShadows_check">
+            <property name="text">
+             <string>castsShadows</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QGroupBox" name="idp_box">
+         <property name="title">
+          <string>IDP</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="chr_idp1_btn">
+            <property name="text">
+             <string>chr_IDP1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="chr_idp2_btn">
+            <property name="text">
+             <string>chr_IDP2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="chr_idp3_btn">
+            <property name="text">
+             <string>chr_IDP3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="bg_idp1_btn">
+            <property name="text">
+             <string>bg_IDP1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="bg_idp2_btn">
+            <property name="text">
+             <string>bg_IDP2</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="bg_idp3_btn">
+            <property name="text">
+             <string>bg_IDP3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="idp_r_btn">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>R_shader</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="idp_g_btn">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 255, 0);</string>
+            </property>
+            <property name="text">
+             <string>G_shader</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="idp_b_btn">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 255);</string>
+            </property>
+            <property name="text">
+             <string>B_shader</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="idp_a_btn">
+            <property name="text">
+             <string>A_shader</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QPushButton" name="idp_maeet_btn">
+            <property name="text">
+             <string>Maeet_shader</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
