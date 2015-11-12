@@ -67,7 +67,14 @@ class ArnoldSetting(object):
     def setRenderCommon(self, w=1920, h=1080, dar = 1.778):
         #
         #    render：    [defaultRenderGlobalsNode, defaultArnoldRenderOptionsNode, defaultArnoldDriverNode, defaultArnoldFilter]
-        #    
+        #      
+        
+        #设置渲染时间
+        pm.mel.eval('setRenderRange;')
+        #设置渲染相机
+        pm.mel.setRenderCamera()
+        
+        
         #设置图片文件前缀名: <Camera>/<RenderLayer>/<Scene>
         imageFilePrefix = '<Camera>/<RenderLayer>/<Scene>'
         if self.defaultRG:
@@ -81,7 +88,7 @@ class ArnoldSetting(object):
             self.defaultRG.periodInExt.set(1)
             if self.defaultRG.outFormatControl.get() == 1:
                 self.defaultRG.outFormatControl.set(0)
-                
+        
         if self.driverNode:
             #设置图片格式: 'exr'
             self.driverNode.aiTranslator.set('exr')
@@ -94,7 +101,7 @@ class ArnoldSetting(object):
             #不勾Tiled
             self.driverNode.tiled.set(0)
             #勾选Autocrop
-            self.driverNode.autocrop.set(1)
+            #self.driverNode.autocrop.set(1)
             #不勾Append
             self.driverNode.append.set(0)
             
@@ -111,23 +118,25 @@ class ArnoldSetting(object):
         if self.options:
             self.options.lock_sampling_noise.set(1)
             
-        #设置渲染时间
-        pm.mel.eval('setRenderRange;')
-        #设置渲染相机
-        pm.mel.setRenderCamera()
-                
         return True
             
      
     def setRenderLayer(self, name):
+        #根据不同的渲染层设置不同的渲染器属性
+        #
+        #参数name: 提供渲染层的名称
+        #
         if not self.options:
             return False
         else :
             pass
+        
+        self.driverNode.aiTranslator.set('exr')
+        
         if name == 'bg_color':
             pass
         elif name == 'chr_color':
-            self.options.AASamples.set(5)
+            self.options.AASamples.set(4)
             self.options.GIDiffuseSamples.set(2)
             self.options.GIGlossySamples.set(2)
             self.options.GIRefractionSamples.set(2)
@@ -141,15 +150,24 @@ class ArnoldSetting(object):
             self.options.GIReflectionDepth.set(2)
             self.options.GIRefractionDepth.set(2)
             self.options.GIVolumeDepth.set(0)
-            self.options.autoTransparencyDepth.set(0)
-            self.options.autoTransparencyThreshold.set(0)
-        elif name in ["IDP", "shadow", "RGBlight", "FOGlight"]:
-            self.options.AASamples.set(4)
+            self.options.autoTransparencyDepth.set(10)
+            self.options.autoTransparencyThreshold.set(0.99)
+        elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3", "shadow", "RGBlight", "FOGlight"]:
+            self.options.AASamples.set(3)
             self.options.GIDiffuseSamples.set(0)
             self.options.GIGlossySamples.set(0)
             self.options.GIRefractionSamples.set(0)
             self.options.sssBssrdfSamples.set(0)
             self.options.volumeIndirectSamples.set(2)
+            
+            self.options.GITotalDepth.set(10)
+            self.options.GIDiffuseDepth.set(1)
+            self.options.GIGlossyDepth.set(1)
+            self.options.GIReflectionDepth.set(2)
+            self.options.GIRefractionDepth.set(2)
+            self.options.GIVolumeDepth.set(0)
+            self.options.autoTransparencyDepth.set(10)
+            self.options.autoTransparencyThreshold.set(0.99)
         else :
             pass 
         return True
