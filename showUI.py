@@ -128,6 +128,8 @@ class ArnoldTool(form_class, base_class):
             idp_dic = CNG.makeidp1Dic()
         elif name == 'chr_idp2':
             idp_dic = CNG.makeidp2Dic()
+        elif name == 'chr_idp3' or name == 'bg_idp3':
+            idp_dic = CNG.makeidp3Dic()
         else :
             idp_dic = {}
         CRL.createRenderLayer(name)

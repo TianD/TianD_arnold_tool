@@ -77,6 +77,7 @@ def createRenderLayer(name):
     allgeos = getallGeos()
     topgrp = list(set([i.getParent(-1) for i in allgeos]))
     
+    members = getallTops()
     #切换渲染器
     try:
         defaultLayer = pm.nodetypes.RenderLayer.defaultRenderLayer()
@@ -92,15 +93,17 @@ def createRenderLayer(name):
     for rl in renderLayers:
         if 'defaultRenderLayer' not in rl.name():
             pm.delete(rl)
-    
+        
     #创建渲染层
     if name == "bg_color":
         for key in ['AO', 'NOM', 'Fre', 'Z']:
             at.createAOV(key)
+        members = getsetTops() + getlightTops()
     elif name == "chr_color":
         for key in ['AO', 'NOM', 'Fre', 'sss']:
             at.createAOV(key)
-        importLight()
+        im = importLight()
+        members = getchrandpropTops() + im
     elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3"]:
         delAllShaders(topgrp)
         shader, sg = CNG.createIDPNode('Maeet')
@@ -131,7 +134,7 @@ def createRenderLayer(name):
     except:
         pass
     layer.setCurrent()
-    layer.addMembers(getallTops())
+    layer.addMembers(members)
     try:
         saveFile(name)
     except:
@@ -149,6 +152,18 @@ def importLight(path = "Z:/Proj/SENBA/Senba_link/Render/chr_light/chr_light.mb")
 
 def getallTops():
     return pm.ls(assemblies = 1)
+
+def getchrandpropTops():
+    #获取角色道具组
+    return [i for i in pm.ls(assemblies = 1) if 'charRigGrp' in i.name() or 'PropRigGrp' in i.name()]
+
+def getsetTops():
+    #获取场景组
+    return pm.ls(regex = '*:*SetRigGrp')
+
+def getlightTops():
+    #获取灯光组
+    return list(set([l.getParent(-1) for l in pm.ls(lights = 1)]))
 
 def getallGeos():
     #获取模型对象

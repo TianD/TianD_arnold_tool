@@ -33,6 +33,11 @@ IDP1_TYPE_DIC = {
 
 IDP2_TYPE_LIST = ['R', 'G', 'B', 'C', 'Y', 'P', 'A']
 
+IDP3_TYPE_DIC = {
+                 'R': ['SetRigGrp',],
+                 'G': ['charRigGrp', 'PropRigGrp'],
+                 }
+
 def createZ(out = None):
     #创建Z通道节点组合
     #
@@ -279,6 +284,19 @@ def makeidp2Dic():
         idp_dic.setdefault(IDP2_TYPE_LIST[i], geos[i])
         
     return idp_dic
+
+def makeidp3Dic():
+    idp_dic = dict()
+    geos = pm.ls(assemblies = 1)
+    
+    for geo in geos:
+        for key, value in IDP3_TYPE_DIC.items():
+            for v in value:
+                if v in geo.name():
+                    idp_dic.setdefault(key, list()).append(geo)
+                
+    return idp_dic
+        
 
 if __name__ == "__main__":
     #createFresnel()
