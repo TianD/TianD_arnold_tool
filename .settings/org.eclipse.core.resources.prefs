@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 encoding//TianD_ass_tool/ass_tool.py=utf-8
-encoding//TianD_ass_tool/replaceFileName.py=utf-8
+encoding//TianD_ass_tool/replaceASSFileName.py=utf-8
 encoding/CreateNodeGroup.py=utf-8
 encoding/CreateRenderLayers.py=utf-8
 encoding/__init__.py=utf-8
