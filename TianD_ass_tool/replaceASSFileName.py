@@ -33,7 +33,7 @@ def main():
             at.loadASS(ass_file)
             for n in at.getASSNode("MayaFile"):
                 filename = at.getASSParameter(n, "filename")
-                
+                  
                 namebase = pm.Path(filename).namebase
                 ext = pm.Path(filename).ext
                 ma = re.match(rule, name)
