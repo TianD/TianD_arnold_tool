@@ -134,7 +134,15 @@ class ArnoldSetting(object):
         self.driverNode.aiTranslator.set('exr')
         
         if name == 'bg_color':
-            pass
+            self.options.AASamples.set(4)
+            self.options.GIDiffuseSamples.set(0)
+            self.options.GIGlossySamples.set(0)
+            self.options.GIRefractionSamples.set(0)
+            self.options.sssBssrdfSamples.set(0)
+            self.options.volumeIndirectSamples.set(2)
+            
+            self.options.lock_sampling_noise.set(1)
+            
         elif name == 'chr_color':
             self.options.AASamples.set(4)
             self.options.GIDiffuseSamples.set(2)
