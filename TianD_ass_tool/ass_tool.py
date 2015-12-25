@@ -48,7 +48,7 @@ def loadASS(ass_file):
     ai_plugins.AiLoadPlugins('C:/solidangle/mtoadeploy/2014/shaders')
     
     #在控制台显示运行日志
-    ai_msg.AiMsgSetConsoleFlags(ai_msg.AI_LOG_ALL)
+    #ai_msg.AiMsgSetConsoleFlags(ai_msg.AI_LOG_ALL)
     
     # 载入ass文件
     ai_dotass.AiASSLoad(ass_file, ai_node_entry.AI_NODE_ALL)
@@ -112,7 +112,7 @@ def setASSParameter(node, parameter, value):
     if PARAMETER_FUNCTION_DIC.has_key(ptype):
         value = PARAMETER_FUNCTION_DIC[ptype][0](node, parameter, value)
     else :
-        pass
+        print "no set"
     
 def getASSNode(nodeType = None, nameFilter = None, mask = ai_node_entry.AI_NODE_SHADER):
     # 获取.ass文件中的节点
@@ -244,6 +244,7 @@ def replaceASSParameter(ass_file, nodeType, parameter, replacefrom, replaceto, n
 '''    
 
 if __name__ == '__main__':
+    
     ass_file = "E:\\maya\\pSphere2.ass"
     loadASS(ass_file)
     for n in getASSNode("MayaChecker"):
