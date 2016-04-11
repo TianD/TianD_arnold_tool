@@ -160,6 +160,27 @@ class ArnoldSetting(object):
             self.options.GIVolumeDepth.set(0)
             self.options.autoTransparencyDepth.set(10)
             self.options.autoTransparencyThreshold.set(0.99)
+            
+        # add at 2015/12/30
+        elif name == 'night_chr_color':
+            self.options.AASamples.set(4)
+            self.options.GIDiffuseSamples.set(0)
+            self.options.GIGlossySamples.set(1)
+            self.options.GIRefractionSamples.set(0)
+            self.options.sssBssrdfSamples.set(0)
+            self.options.volumeIndirectSamples.set(2)
+
+            self.options.sssUseAutobump.set(0)
+            self.options.GITotalDepth.set(6)
+            self.options.GIDiffuseDepth.set(1)
+            self.options.GIGlossyDepth.set(1)
+            self.options.GIReflectionDepth.set(2)
+            self.options.GIRefractionDepth.set(2)
+            self.options.GIVolumeDepth.set(0)
+            self.options.autoTransparencyDepth.set(10)
+            self.options.autoTransparencyThreshold.set(0.99)
+        # 
+            
         elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3", "shadow", "RGBlight", "FOGlight"]:
             self.options.AASamples.set(3)
             self.options.GIDiffuseSamples.set(0)

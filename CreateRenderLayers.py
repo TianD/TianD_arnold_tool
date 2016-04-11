@@ -23,6 +23,7 @@ import CreateNodeGroup as CNG
 #包括: chr_color, bg_color, IDP, shadow, RGBlight, FOGlight
 
 LAYER_FILENAME = {'chr_color':'CHRcolor',
+                  'night_chr_color':'CHRcolor',
                   'bg_color':'BGcolor',
                   'chr_idp1':'CHRidp1',
                   'chr_idp2':'CHRidp2',
@@ -104,6 +105,11 @@ def createRenderLayer(name):
             at.createAOV(key)
         im = importLight()
         members = getchrandpropTops() + im
+    elif name == "night_chr_color":
+        for key in ['AO', 'NOM', 'Fre', 'sss']:
+            at.createAOV(key)
+        im = importLight()
+        members = getchrandpropTops() + im
     elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3"]:
         delAllShaders(topgrp)
         shader, sg = CNG.createIDPNode('Maeet')
@@ -124,10 +130,14 @@ def createRenderLayer(name):
     else :
         pass
     
+    if name == 'night_chr_color':
+        layerName = 'chr_color'
+    else :
+        layerName = name
     try:
-        layer = pm.nodetypes.RenderLayer.findLayerByName(name)
+        layer = pm.nodetypes.RenderLayer.findLayerByName(layerName)
     except:
-        layer = pm.createRenderLayer(name = name, e=1)
+        layer = pm.createRenderLayer(name = layerName, e=1)
     try:
         defaultLayer = pm.nodetypes.RenderLayer.defaultRenderLayer()
         defaultLayer.renderable.set(0)

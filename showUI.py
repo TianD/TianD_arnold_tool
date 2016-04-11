@@ -62,6 +62,10 @@ class ArnoldTool(form_class, base_class):
         
         self.chr_color_btn.clicked.connect(partial(self.createLayerCmd, 'chr_color'))
         
+        # add at 2015/12/30
+        self.night_chr_color_btn.clicked.connect(partial(self.createLayerCmd, 'night_chr_color'))
+        #
+        
         self.bg_color_btn.clicked.connect(partial(self.createLayerCmd, 'bg_color'))
         
         self.chr_idp1_btn.clicked.connect(partial(self.createLayerCmd, 'chr_idp1'))
