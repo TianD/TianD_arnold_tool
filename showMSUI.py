@@ -52,7 +52,7 @@ class ArnoldTool(form_class, base_class):
         super(ArnoldTool, self).__init__(parent)
         self.setupUi(self)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-        
+                
         self.project_btn.clicked.connect(self.setProjCmd)
         
         self.setRender_btn.clicked.connect(self.setRenderCmd)
@@ -112,7 +112,7 @@ class ArnoldTool(form_class, base_class):
     def setRenderCmd(self):
         #设置渲染器按钮命令
         self.arnold.setRender()
-        self.arnold.setRenderCommon()
+        self.arnold.setRenderCommon(MS=True)
     
     def setProjCmd(self):
         #创建工程目录按钮命令

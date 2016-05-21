@@ -9,13 +9,14 @@ Created on 2015年10月21日 上午10:15:31
 @Q    Q: 298081132
 
 @Description:  使用mtoa.aovs 创建AOV
+
 '''
 import mtoa.aovs as aovs
 import CreateNodeGroup as CNG
 reload(CNG)
 
 #定义每个AOV层的data类型
-DEFAULT_AOV_DATA_TYPES = {'AO': 'rgba', 'NOM': 'rgba', 'Fre': 'rgba', 'Zdp': 'rgba', 'sss': 'rgb', 'Z': 'float'}
+DEFAULT_AOV_DATA_TYPES = {'AO': 'rgba', 'NOM': 'rgba', 'Fre': 'rgba', 'Zdp': 'rgba', 'sss': 'rgb', 'Z': 'float', 'motionvector': 'rgb'}
 
 
 #编辑arnold的aov的默认filter字典

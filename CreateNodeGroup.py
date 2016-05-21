@@ -9,6 +9,7 @@ Created on 2015年10月21日 下午2:27:40
 @Q    Q: 298081132
 
 @Description: create node group or shader
+
 '''
 import pymel.core as pm
 
@@ -35,7 +36,7 @@ IDP2_TYPE_LIST = ['R', 'G', 'B', 'C', 'Y', 'P', 'A']
 
 IDP3_TYPE_DIC = {
                  'R': ['SetRigGrp',],
-                 'G': ['charRigGrp', 'PropRigGrp'],
+                 'G': ['charRigGrp', 'PropRigGrp', 'CharRigGrp'],
                  }
 
 def createZ(out = None):
@@ -257,7 +258,7 @@ def assignShader(obj, shader, sg):
 def makeidp1Dic():
     idp_dic = dict()
     
-    geos = [i.getParent() for i in pm.ls(type = "mesh") if not i.isIntermediate() and (i.isVisible() == 1) and 'charRigGrp' in i.fullPath() and not 'norender' in i.fullPath()]
+    geos = [i.getParent() for i in pm.ls(type = "mesh") if not i.isIntermediate() and (i.isVisible() == 1) and ('charRigGrp' in i.fullPath() or 'CharRigGrp' in i.fullPath()) and not 'norender' in i.fullPath()]
     
     had = []
     for geo in geos:
@@ -276,7 +277,7 @@ def makeidp1Dic():
 
 def makeidp2Dic():
     idp_dic = dict()
-    geos = [i for i in pm.ls(assemblies = 1) if 'charRigGrp' in i.name()]
+    geos = [i for i in pm.ls(assemblies = 1) if 'charRigGrp' in i.name() or 'CharRigGrp' in i.name()]
     
     if len(geos) > 7:
         geos = geos[:7]

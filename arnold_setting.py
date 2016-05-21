@@ -7,8 +7,13 @@ Created on 2015年10月22日 上午11:20:33
 @E-mail: tiandao_dunjian@sina.cn
 
 @Q    Q: 298081132
+
+@Description:  set arnold render common setting
+
 '''
 import pymel.core as pm
+
+from kxTool import KXTool
 
 pm.mel.eval('source "lightRendering.mel"')
 
@@ -30,11 +35,11 @@ class ArnoldSetting(object):
         except:
             print "mtoa has been loaded!!!"
             
-        try:
-            if pm.pluginInfo("Mayatomr.mll", q=1, loaded=1):
-                pm.unloadPlugin("Mayatomr", f=1)
-        except:
-            print "mentalRay is unloaded failure!!!"
+#         try:
+#             if pm.pluginInfo("Mayatomr.mll", q=1, loaded=1):
+#                 pm.unloadPlugin("Mayatomr", f=1)
+#         except:
+#             print "mentalRay is unloaded failure!!!"
             
             
         self.defaultRG = pm.PyNode("defaultRenderGlobals")
@@ -64,16 +69,39 @@ class ArnoldSetting(object):
         return True
         
 
-    def setRenderCommon(self, w=1920, h=1080, dar = 1.778):
+    def setRenderCommon(self, w=1920, h=1080, dar = 1.778, MS = False):
         #
         #    render：    [defaultRenderGlobalsNode, defaultArnoldRenderOptionsNode, defaultArnoldDriverNode, defaultArnoldFilter]
         #      
-        
-        #设置渲染时间
-        pm.mel.eval('setRenderRange;')
-        #设置渲染相机
-        pm.mel.setRenderCamera()
-        
+        if not MS:
+            kx = KXTool()
+            kx.getSceneName()
+            kx.analyzeSceneName()
+            if kx.resolutionDic.has_key(kx.projectName):
+                w = kx.resolutionDic[kx.projectName][0]
+                h = kx.resolutionDic[kx.projectName][1]
+                dar = kx.resolutionDic[kx.projectName][2]
+            #设置渲染时间
+            pm.mel.eval('setRenderRange;')
+            #设置渲染相机
+            if kx.projectName == 'ROCK':
+                projCam = pm.ls("cam_{sq}_{se}_{sc}".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber))
+                projCam_baked = pm.ls("cam_{sq}_{se}_{sc}_baked".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber))
+                if projCam and not projCam_baked:
+                    raise NameError, "no right baked camera"
+                try:
+                    camL = [cam for cam in projCam_baked[0].getChildren() if 'stereoCameraLeft' in cam.name()][0].getShape()
+                except:
+                    raise NameError, "no project camera"
+                camL.renderable.set(1)
+                for cam in pm.ls(type = "camera"):
+                    if cam != camL:
+                        cam.renderable.set(0)
+                
+        else :
+            #设置渲染时间
+            pm.mel.eval('setRenderRange;')
+
         
         #设置图片文件前缀名: <Camera>/<RenderLayer>/<Scene>
         imageFilePrefix = '<Camera>/<RenderLayer>/<Scene>'
@@ -150,7 +178,7 @@ class ArnoldSetting(object):
             self.options.GIRefractionSamples.set(2)
             self.options.sssBssrdfSamples.set(2)
             self.options.volumeIndirectSamples.set(2)
-
+            
             self.options.sssUseAutobump.set(0)
             self.options.GITotalDepth.set(5)
             self.options.GIDiffuseDepth.set(1)
@@ -160,6 +188,12 @@ class ArnoldSetting(object):
             self.options.GIVolumeDepth.set(0)
             self.options.autoTransparencyDepth.set(10)
             self.options.autoTransparencyThreshold.set(0.99)
+            
+            # add at 2016/04/19
+            # add motion blur
+            self.options.motion_blur_enable.set(1)
+            self.options.range_type.set(0)
+            self.options.ignoreMotionBlur.set(1)
             
         # add at 2015/12/30
         elif name == 'night_chr_color':

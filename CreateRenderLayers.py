@@ -9,6 +9,7 @@ Created on 2015年10月26日 下午3:32:42
 @Q    Q: 298081132
 
 @Description: create render layer
+
 '''
 
 import pymel.core as pm
@@ -144,7 +145,8 @@ def createRenderLayer(name):
     except:
         pass
     layer.setCurrent()
-    layer.addMembers(members)
+    if members:
+        layer.addMembers(members)
     try:
         saveFile(name)
     except:
@@ -165,7 +167,7 @@ def getallTops():
 
 def getchrandpropTops():
     #获取角色道具组
-    return [i for i in pm.ls(assemblies = 1) if 'charRigGrp' in i.name() or 'PropRigGrp' in i.name()]
+    return [i for i in pm.ls(assemblies = 1) if 'charRigGrp' in i.name() or 'CharRigGrp' in i.name() or 'PropRigGrp' in i.name()]
 
 def getsetTops():
     #获取场景组
