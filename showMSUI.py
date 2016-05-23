@@ -52,6 +52,7 @@ class ArnoldTool(form_class, base_class):
         super(ArnoldTool, self).__init__(parent)
         self.setupUi(self)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+        self.setWindowTitle(u"MS用Arnold设置工具")
                 
         self.project_btn.clicked.connect(self.setProjCmd)
         
