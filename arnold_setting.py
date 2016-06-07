@@ -85,8 +85,9 @@ class ArnoldSetting(object):
             pm.mel.eval('setRenderRange;')
             #设置渲染相机
             if kx.projectName == 'ROCK':
-                projCam = pm.ls("cam_{sq}_{se}_{sc}".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber))
-                projCam_baked = pm.ls("cam_{sq}_{se}_{sc}_baked".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber))
+                projCam = pm.ls(regex="cam_{sq}_{se}_({sc}|{SC})".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber, SC = kx.sceneNumber.upper()))
+                projCam_baked = pm.ls(regex ="cam_{sq}_{se}_({sc}|{SC})_baked".format(sq = kx.episodeNumber, se = kx.sessionNumber, sc = kx.sceneNumber, SC = kx.sceneNumber.upper()))
+                
                 if projCam and not projCam_baked:
                     raise NameError, "no right baked camera"
                 try:
