@@ -98,6 +98,8 @@ class ArnoldSetting(object):
                 for cam in pm.ls(type = "camera"):
                     if cam != camL:
                         cam.renderable.set(0)
+            else :
+                pm.mel.setRenderCamera()
                 
         else :
             #设置渲染时间

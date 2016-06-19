@@ -7,6 +7,8 @@ Created on 2015年11月13日 下午3:55:54
 @E-mail: tiandao_dunjian@sina.cn
 
 @Q    Q: 298081132
+
+@Description: ass function
 '''
 
 # 导入模块
@@ -16,7 +18,7 @@ from arnold import ai_nodes, ai_render, ai_plugins, ai_msg, ai_dotass, ai_node_e
 # ai_plugins module       #    加载插件
 # ai_msg module           #    主要是显示日志等
 # ai_dotass module        #    主要是对ass文件的读写
-# ai_node_entry module    #    不太理解这个模块, 这里用这个模块查询了节点内包含的属性数量和序号
+# ai_node_entry module    #    这个模块查询节点内包含的属性数量和序号
 # ai_params module        #    主要是对节点参数的操作, 包括节点参数的类型和名称的查询等
 # ai_universe module      #    主要是生成和销毁迭代器, 包括节点、aov等. 
 
@@ -61,7 +63,7 @@ def saveASS(ass_file):
     # 结束
     ai_render.AiEnd()
 
-def endWithoutSave(ass_file):
+def endWithoutSave():
     # 如果不修改内容, 可以选择不保存直接退出
     # 结束
     ai_render.AiEnd()
@@ -114,7 +116,7 @@ def setASSParameter(node, parameter, value):
     else :
         print "no set"
     
-def getASSNode(nodeType = None, nameFilter = None, mask = ai_node_entry.AI_NODE_SHADER):
+def listASSNodes(nodeType = None, nameFilter = None, mask = ai_node_entry.AI_NODE_SHADER):
     # 获取.ass文件中的节点
     #
     # 参数ass_file: [string] ass文件路径
@@ -158,98 +160,12 @@ def getASSNode(nodeType = None, nameFilter = None, mask = ai_node_entry.AI_NODE_
 
     return nodeLst
 
-'''   
-#### example script
-def replaceASSParameter(ass_file, nodeType, parameter, replacefrom, replaceto, nameFilter = None, mask = ai_node_entry.AI_NODE_SHADER):
-    # 替换ass文件中的属性值
-    #
-    # 参数ass_file: [string] ass文件路径
-    # 参数nodeType: [string] 节点类型
-    # 参数parameter: [string] 参数名
-    # 参数replacefrom: [string] 需要被替换的字符
-    # 参数replaceto: [string] 替换成什么字符
-    # 参数nameFilter: [list] 指定节点名称, 如果是None, 就是指定类型的所有节点; 如果是列表, 就匹配列表中的节点名称
-    # 参数mask: [global variable] ai_node_entry内定义的节点类型的种类, 包括:
-    #            AI_NODE_UNDEFINED =  0x0000  ## Undefined type
-    #            AI_NODE_OPTIONS =    0x0001  ## Options node (following the "singleton" pattern, there is only one options node)
-    #            AI_NODE_CAMERA =     0x0002  ## Camera nodes (\c persp_camera, \c fisheye_camera, etc)
-    #            AI_NODE_LIGHT =      0x0004  ## Light source nodes (\c spot_light, etc)
-    #            AI_NODE_SHAPE =      0x0008  ## Geometry nodes (\c sphere, \c polymesh, etc)
-    #            AI_NODE_SHADER =     0x0010  ## Shader nodes (\c lambert, etc)
-    #                maya的file节点、shadingEngine节点、shader节点都属于这个范围
-    #            AI_NODE_OVERRIDE =   0x0020  ## EXPERIMENTAL: override nodes support "delayed parameter overrides" for \c procedural nodes
-    #            AI_NODE_DRIVER =     0x0040  ## Output driver nodes (\c driver_tiff, etc)
-    #            AI_NODE_FILTER =     0x0080  ## Pixel sample filter nodes (\c box_filter, etc
-    #            AI_NODE_ALL =        0xFFFF  ## Bitmask including all node types, used by AiASSWrite()
-    
-
-    # 开始
-    ai_render.AiBegin()
-    
-    # Load the mtoa shaders, which include maya built-in nodes
-    # 载入mtoa插件里的材质球, 内中记录了maya的节点
-    # 必须加载这个路径下的插件arnold api 才能识别maya的插件
-    ai_plugins.AiLoadPlugins('C:/solidangle/mtoadeploy/2014/shaders')
-    
-    #在控制台显示运行日志
-    ai_msg.AiMsgSetConsoleFlags(ai_msg.AI_LOG_ALL)
-    
-    # 载入ass文件
-    ai_dotass.AiASSLoad(ass_file, ai_node_entry.AI_NODE_ALL)
-    
-    # 获取shader类型的节点的迭代器, maya的节点在arnold 中都是shader类型
-    iter = ai_universe.AiUniverseGetNodeIterator(mask)
-    while not ai_universe.AiNodeIteratorFinished(iter):
-        node = ai_universe.AiNodeIteratorGetNext(iter)
-        
-        print ai_nodes.AiNodeGetName( node )
-        
-        # Is the node a MayaFile?
-        # 判断节点是否是maya的file节点                
-        if ai_nodes.AiNodeIs( node, nodeType ):
-            
-            if nameFilter:
-                
-                name = ai_nodes.AiNodeGetStr(node, "name")
-                
-                if name in nameFilter:
-                    pass
-                
-                else :
-                    continue
-                        
-            # 获取MayaFile节点的filename属性值
-            filename = ai_nodes.AiNodeGetStr( node, parameter )
-            
-            # 替换路径
-            newname = filename.replace( replacefrom, replaceto )
-            
-            # 修改MayaFile节点的filename属性值
-            ai_nodes.AiNodeSetStr(node, parameter, newname)
-
-#             # 创建MayaFile节点
-#             n = ai_nodes.AiNode("MayaFile");
-#             # 设置属性值
-#             ai_nodes.AiNodeSetStr(n, "filename", name.replace( 'E:/', 'E:/maya/' ))
-    
-    # 循环完所有的节点之后, 销毁迭代器
-    ai_universe.AiNodeIteratorDestroy(iter)
-    
-    # 保存文件
-    ai_dotass.AiASSWrite(ass_file, AI_NODE_ALL, False)
-    
-    # 结束
-    ai_render.AiEnd()
-    
-'''    
-
 if __name__ == '__main__':
     
     ass_file = "E:\\maya\\pSphere2.ass"
     loadASS(ass_file)
-    for n in getASSNode("MayaChecker"):
+    for n in listASSNodes("MayaChecker"):
         value = getASSParameter(n, "color1")
-        #newfilename = filename.replace("E:/", "E:/maya/")
-        #setASSParameter(n, "filename", newfilename)
         print value
-    saveASS(ass_file)
+    #saveASS(ass_file)
+    endWithoutSave()
