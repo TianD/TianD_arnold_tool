@@ -15,6 +15,7 @@ Created on 2015年10月26日 下午3:32:42
 import pymel.core as pm
 
 from lightRenderData import ProjNameMatch
+import kxTool
 
 import aov_tool as at
 import CreateNodeGroup as CNG
@@ -159,6 +160,11 @@ def importLight(path = "Z:/Proj/SENBA/Senba_link/Render/chr_light/chr_light.mb")
     #参数path: 要导入的文件的路径
     #
     #返回值是导入的对象列表
+    kx = kxTool.KXTool()
+    kx.getSceneName()
+    kx.analyzeSceneName()
+    if kx.projectName:
+        path = kx.chr_light_pathDic[kx.projectName]
     importNode = pm.importFile(path, returnNewNodes = 1)
     return importNode
 

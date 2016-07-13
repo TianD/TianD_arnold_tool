@@ -1,0 +1,61 @@
+<arnold_setting>
+	<layer name="bg_color">
+		<attr name="defaultArnoldRenderOptions.AASamples">4</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossySamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.sssBssrdfSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.volumeIndirectSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.lock_sampling_noise">1</attr>
+	</layer>
+	<layer name="chr_color">
+		<attr name="defaultArnoldRenderOptions.AASamples">4</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossySamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.sssBssrdfSamples">4</attr>
+		<attr name="defaultArnoldRenderOptions.volumeIndirectSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.sssUseAutobump">0</attr>
+		<attr name="defaultArnoldRenderOptions.GITotalDepth">5</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossyDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIReflectionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIVolumeDepth">0</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyDepth">10</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyThreshold">0.99</attr>
+	</layer>
+	<layer name="night_chr_color">
+		<attr name="defaultArnoldRenderOptions.AASamples">4</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossySamples">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.sssBssrdfSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.volumeIndirectSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.sssUseAutobump">0</attr>
+		<attr name="defaultArnoldRenderOptions.GITotalDepth">6</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossyDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIReflectionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIVolumeDepth">0</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyDepth">10</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyThreshold">0.99</attr>
+	</layer>
+	<layer name="chr_idp1,chr_idp2,chr_idp3,bg_idp1,bg_idp2,bg_idp3,shadow,RGBlight,FOGlight">
+		<attr name="defaultArnoldRenderOptions.AASamples">3</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossySamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.sssBssrdfSamples">0</attr>
+		<attr name="defaultArnoldRenderOptions.volumeIndirectSamples">2</attr>
+		<attr name="defaultArnoldRenderOptions.GITotalDepth">10</attr>
+		<attr name="defaultArnoldRenderOptions.GIDiffuseDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIGlossyDepth">1</attr>
+		<attr name="defaultArnoldRenderOptions.GIReflectionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIRefractionDepth">2</attr>
+		<attr name="defaultArnoldRenderOptions.GIVolumeDepth">0</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyDepth">10</attr>
+		<attr name="defaultArnoldRenderOptions.autoTransparencyThreshold">0.99</attr>
+	</layer>
+</arnold_setting>

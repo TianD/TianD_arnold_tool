@@ -42,7 +42,7 @@ def loadASS(ass_file, AiPluginsPath = 'C:/solidangle/mtoadeploy/2014/shaders'):
     
     ai_plugins.AiLoadPlugins(AiPluginsPath)
     
-    #ai_msg.AiMsgSetConsoleFlags(ai_msg.AI_LOG_ALL)
+    ai_msg.AiMsgSetConsoleFlags(ai_msg.AI_LOG_ALL)
     
     ai_dotass.AiASSLoad(ass_file, ai_node_entry.AI_NODE_ALL)
     
@@ -150,10 +150,10 @@ def listASSNodes(nodeType = None, nameFilter = None, mask = ai_node_entry.AI_NOD
 
 if __name__ == '__main__':
     
-    ass_file = "E:\\maya\\pSphere2.ass"
+    ass_file = "E:\\maya\\guanmu.ass"
     loadASS(ass_file)
-    for n in listASSNodes("MayaChecker"):
-        value = getASSParameter(n, "name")
-        print value
-    #saveASS(ass_file)
-    endWithoutSave()
+    for n in listASSNodes("MayaFile"):
+        filename = getASSParameter(n, "filename")
+        print filename
+    saveASS(ass_file)
+    #endWithoutSave()

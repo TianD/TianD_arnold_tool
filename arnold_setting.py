@@ -11,11 +11,36 @@ Created on 2015年10月22日 上午11:20:33
 @Description:  set arnold render common setting
 
 '''
+import os.path
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+
 import pymel.core as pm
 
 from kxTool import KXTool
 
 pm.mel.eval('source "lightRendering.mel"')
+
+
+def getSettingFromXML(xml_file = os.path.join(os.path.dirname(__file__), 'arnold_setting.xml')):
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+    dic = dict()
+    for layer in root:
+        layerlst = layer.attrib['name'].split(",")
+        for l in layerlst:
+            for attr in layer:
+                value = attr.attrib['name']
+                v = attr.text
+                if "." in v:
+                    v = float(v)
+                else :
+                    v = int(v)
+                dic.setdefault(l, list()).append([value, v])
+    return dic
+    
 
 class ArnoldSetting(object):
     
@@ -99,7 +124,7 @@ class ArnoldSetting(object):
                     if cam != camL:
                         cam.renderable.set(0)
             else :
-                pm.mel.setRenderCamera()
+                pm.mel.setRenderCamera()            
                 
         else :
             #设置渲染时间
@@ -164,76 +189,82 @@ class ArnoldSetting(object):
         
         self.driverNode.aiTranslator.set('exr')
         
-        if name == 'bg_color':
-            self.options.AASamples.set(4)
-            self.options.GIDiffuseSamples.set(0)
-            self.options.GIGlossySamples.set(0)
-            self.options.GIRefractionSamples.set(0)
-            self.options.sssBssrdfSamples.set(0)
-            self.options.volumeIndirectSamples.set(2)
-            
-            self.options.lock_sampling_noise.set(1)
-            
-        elif name == 'chr_color':
-            self.options.AASamples.set(4)
-            self.options.GIDiffuseSamples.set(2)
-            self.options.GIGlossySamples.set(2)
-            self.options.GIRefractionSamples.set(2)
-            self.options.sssBssrdfSamples.set(2)
-            self.options.volumeIndirectSamples.set(2)
-            
-            self.options.sssUseAutobump.set(0)
-            self.options.GITotalDepth.set(5)
-            self.options.GIDiffuseDepth.set(1)
-            self.options.GIGlossyDepth.set(1)
-            self.options.GIReflectionDepth.set(2)
-            self.options.GIRefractionDepth.set(2)
-            self.options.GIVolumeDepth.set(0)
-            self.options.autoTransparencyDepth.set(10)
-            self.options.autoTransparencyThreshold.set(0.99)
-            
-            # add at 2016/04/19
-            # add motion blur
-            self.options.motion_blur_enable.set(1)
-            self.options.range_type.set(0)
-            self.options.ignoreMotionBlur.set(1)
-            
-        # add at 2015/12/30
-        elif name == 'night_chr_color':
-            self.options.AASamples.set(4)
-            self.options.GIDiffuseSamples.set(0)
-            self.options.GIGlossySamples.set(1)
-            self.options.GIRefractionSamples.set(0)
-            self.options.sssBssrdfSamples.set(0)
-            self.options.volumeIndirectSamples.set(2)
+        setting_dic = getSettingFromXML()
 
-            self.options.sssUseAutobump.set(0)
-            self.options.GITotalDepth.set(6)
-            self.options.GIDiffuseDepth.set(1)
-            self.options.GIGlossyDepth.set(1)
-            self.options.GIReflectionDepth.set(2)
-            self.options.GIRefractionDepth.set(2)
-            self.options.GIVolumeDepth.set(0)
-            self.options.autoTransparencyDepth.set(10)
-            self.options.autoTransparencyThreshold.set(0.99)
-        # 
-            
-        elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3", "shadow", "RGBlight", "FOGlight"]:
-            self.options.AASamples.set(3)
-            self.options.GIDiffuseSamples.set(0)
-            self.options.GIGlossySamples.set(0)
-            self.options.GIRefractionSamples.set(0)
-            self.options.sssBssrdfSamples.set(0)
-            self.options.volumeIndirectSamples.set(2)
-            
-            self.options.GITotalDepth.set(10)
-            self.options.GIDiffuseDepth.set(1)
-            self.options.GIGlossyDepth.set(1)
-            self.options.GIReflectionDepth.set(2)
-            self.options.GIRefractionDepth.set(2)
-            self.options.GIVolumeDepth.set(0)
-            self.options.autoTransparencyDepth.set(10)
-            self.options.autoTransparencyThreshold.set(0.99)
+        if setting_dic.has_key(name):
+            for attr in setting_dic[name]:
+                pm.PyNode(attr[0]).set(attr[1])
+
+#         if name == 'bg_color':
+#             self.options.AASamples.set(4)
+#             self.options.GIDiffuseSamples.set(0)
+#             self.options.GIGlossySamples.set(0)
+#             self.options.GIRefractionSamples.set(0)
+#             self.options.sssBssrdfSamples.set(0)
+#             self.options.volumeIndirectSamples.set(2)
+#             
+#             self.options.lock_sampling_noise.set(1)
+#             
+#         elif name == 'chr_color':
+#             self.options.AASamples.set(4)
+#             self.options.GIDiffuseSamples.set(2)
+#             self.options.GIGlossySamples.set(2)
+#             self.options.GIRefractionSamples.set(2)
+#             self.options.sssBssrdfSamples.set(4)
+#             self.options.volumeIndirectSamples.set(2)
+#             
+#             self.options.sssUseAutobump.set(0)
+#             self.options.GITotalDepth.set(5)
+#             self.options.GIDiffuseDepth.set(1)
+#             self.options.GIGlossyDepth.set(1)
+#             self.options.GIReflectionDepth.set(2)
+#             self.options.GIRefractionDepth.set(2)
+#             self.options.GIVolumeDepth.set(0)
+#             self.options.autoTransparencyDepth.set(10)
+#             self.options.autoTransparencyThreshold.set(0.99)
+#             
+#             # add at 2016/04/19
+#             # add motion blur
+#             self.options.motion_blur_enable.set(1)
+#             self.options.range_type.set(0)
+#             self.options.ignoreMotionBlur.set(1)
+#             
+#         # add at 2015/12/30
+#         elif name == 'night_chr_color':
+#             self.options.AASamples.set(4)
+#             self.options.GIDiffuseSamples.set(0)
+#             self.options.GIGlossySamples.set(1)
+#             self.options.GIRefractionSamples.set(0)
+#             self.options.sssBssrdfSamples.set(0)
+#             self.options.volumeIndirectSamples.set(2)
+# 
+#             self.options.sssUseAutobump.set(0)
+#             self.options.GITotalDepth.set(6)
+#             self.options.GIDiffuseDepth.set(1)
+#             self.options.GIGlossyDepth.set(1)
+#             self.options.GIReflectionDepth.set(2)
+#             self.options.GIRefractionDepth.set(2)
+#             self.options.GIVolumeDepth.set(0)
+#             self.options.autoTransparencyDepth.set(10)
+#             self.options.autoTransparencyThreshold.set(0.99)
+#         # 
+#             
+#         elif name in ["chr_idp1", "chr_idp2", "chr_idp3", "bg_idp1", "bg_idp2", "bg_idp3", "shadow", "RGBlight", "FOGlight"]:
+#             self.options.AASamples.set(3)
+#             self.options.GIDiffuseSamples.set(0)
+#             self.options.GIGlossySamples.set(0)
+#             self.options.GIRefractionSamples.set(0)
+#             self.options.sssBssrdfSamples.set(0)
+#             self.options.volumeIndirectSamples.set(2)
+#             
+#             self.options.GITotalDepth.set(10)
+#             self.options.GIDiffuseDepth.set(1)
+#             self.options.GIGlossyDepth.set(1)
+#             self.options.GIReflectionDepth.set(2)
+#             self.options.GIRefractionDepth.set(2)
+#             self.options.GIVolumeDepth.set(0)
+#             self.options.autoTransparencyDepth.set(10)
+#             self.options.autoTransparencyThreshold.set(0.99)
         else :
             pass 
         return True
